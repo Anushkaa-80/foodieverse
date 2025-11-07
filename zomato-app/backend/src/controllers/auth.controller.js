@@ -23,45 +23,64 @@ async function registerUser(req, res) {
   // password should be sent as hashed not in plain text
   // to know where th request is coming from , we create a token (jsonwebtoken)and assign it to them, token is saved in cookies(cookie parser)
   //cookie parser is used as middleware
-  
-  const token= jwt.sign({
-    id:user._id,},"45854ba52ef6e5d5c3a57f478c55be5f")
 
-    res.cookie("token", token) //save the created token in cookie
-    res.status(201).json({
-        message: "user registered successfully",
-        user:{
-            _id: user._id,
-            email:user.email,
-            fullName: user.fullName
-        }
-    })
+  const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    "45854ba52ef6e5d5c3a57f478c55be5f"
+  );
 
+  res.cookie("token", token); //save the created token in cookie
+  res.status(201).json({
+    message: "user registered successfully",
+    user: {
+      _id: user._id,
+      email: user.email,
+      fullName: user.fullName,
+    },
+  });
 }
 
-async function loginUser(req,res){
-   const {email, password} = req.body;
-   
-   const user = await userModel.findOne({
-    email
-   })
-   if(!user)
-   {
+async function loginUser(req, res) {
+  const { email, password } = req.body;
+
+  const user = await userModel.findOne({
+    email,
+  });
+  if (!user) {
     return res.status(400).json({
-        message:"Invalid email or password"
-    })
-   }
+      message: "Invalid email or password",
+    });
+  }
 
-   const isPasswordValid = await bcrypt.compare(password, user.password);
-   if(!isPasswordValid)
-   {
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
     return res.status(400).json({
-        message:"Invalid email or password"
-    })
-   }
+      message: "Invalid email or password",
+    });
+  }
+  // if we get user, password matched --->now we generate token--> send response
+
+ const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    "45854ba52ef6e5d5c3a57f478c55be5f"
+  );
+ res.cookie("token", token)
+
+  res.status(201).json({
+    message:"user logged in  successfully",
+    user:{
+        _id:user._id,
+        emial: user.email,
+        fullName: user.fullName
+    }
+  })
 }
 
-
-module.exports ={
-    registerUser,  loginUser
-}
+module.exports = {
+  registerUser,
+  loginUser,
+};
