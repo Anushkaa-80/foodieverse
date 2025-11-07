@@ -28,7 +28,7 @@ async function registerUser(req, res) {
     {
       id: user._id,
     },
-    "45854ba52ef6e5d5c3a57f478c55be5f"
+    process.env.JWT_SECRET
   );
 
   res.cookie("token", token); //save the created token in cookie
@@ -66,7 +66,7 @@ async function loginUser(req, res) {
     {
       id: user._id,
     },
-    "45854ba52ef6e5d5c3a57f478c55be5f"
+    process.env.JWT_SECRET
   );
  res.cookie("token", token)
 
