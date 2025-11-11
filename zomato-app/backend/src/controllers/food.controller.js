@@ -11,7 +11,7 @@ async function createFood(req, res){
 
  const fileUploadResult = await storageService.uploadFile(req.file.buffer,uuid()) //whenever called uuid generates unique id.
 
-
+  console.log(fileUploadResult);
     res.send("food item created")
 }
 
