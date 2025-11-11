@@ -1,8 +1,7 @@
-const foodPartnerModel = require("../models/foodpartner.model")
+const foodPartnerModel = require("../models/foodpartner.model.js")
 const jwt = require("jsonwebtoken");
 
-async function authFoodPartnerMiddleware(req,res,next)
-{
+async function authFoodPartnerMiddleware(req,res,next){
     const token = req.cookies.token;
     if(!token)
     {
@@ -11,7 +10,8 @@ async function authFoodPartnerMiddleware(req,res,next)
         })
     }
     try{
-        const decoded = jwt.verify(token, process.env.JWT_SECRET) // it checks the token whether it is corrector not, if true , the token contains the foodpartner id and stored in decoded
+        const decoded = jwt.verify(token, process.env.JWT_SECRET) 
+        //Above: it checks the token whether it is corrector not, if true , the token contains the foodpartner id and stored in decoded
         
         const foodPartner = await foodPartnerModel.findById(decoded.id);
 
@@ -19,8 +19,7 @@ async function authFoodPartnerMiddleware(req,res,next)
 
         next()
 
-    } catch(err)
-    {
+    } catch(err){
         return res.status(401).json({
             message:"Invalid token"
         })

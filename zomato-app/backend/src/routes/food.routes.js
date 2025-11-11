@@ -1,7 +1,6 @@
 const express = require('express');
-const foodController= require("../controllers/food.controller")
-const authMiddleware= require("../middlewares/auth.middleware")
-
+const foodController= require("../controllers/food.controller");
+const authMiddleware= require("../middlewares/auth.middleware");
 const router= express.Router();
 const multer = require('multer');
 
@@ -15,4 +14,6 @@ const upload= multer({
 /* POST /api/food/ [protected] */
 router.post('/', authMiddleware.authFoodPartnerMiddleware ,upload.single("video"),foodController.createFood)
 
+
+//pehle request  authFoodPartnerMiddleware yha aayega ye foodpartner ko uauthenticate krke batayega ki req shi jgh se aarhi hai ya nhi, next() called fir wo foodCreate pe chla jayega  
 module.exports= router;
