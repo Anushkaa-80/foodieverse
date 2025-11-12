@@ -1,5 +1,6 @@
 import React from 'react'
-import '..src/App.css'
+import '../App.css'
+import { Link } from 'react-router-dom'
 
 const UserRegister = () => {
   return (
@@ -33,7 +34,11 @@ const UserRegister = () => {
         </form>
 
         <div className="auth-foot">
-          Already have an account? <a href="/user/login">Sign in</a>
+          Already have an account? <Link to="/user/login">Sign in</Link>
+          <br />
+          <Link to="/user/register">Register as Normal User</Link>
+          <br />
+          <Link to="/food-partner/register">Register as Food Partner</Link>
         </div>
       </div>
     </div>

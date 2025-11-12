@@ -1,5 +1,7 @@
 import React from 'react'
-import '..src/App.css'
+import "../App.css";
+import '../styles/auth.css'
+import { Link } from 'react-router-dom'
 
 const PartnerRegister = () => {
   return (
@@ -38,7 +40,9 @@ const PartnerRegister = () => {
         </form>
 
         <div className="auth-foot">
-          Already partnered? <a href="/food-partner/login">Sign in</a>
+          Already partnered? <Link to="/food-partner/login">Sign in</Link>
+          <br />
+          <Link to="/user/register">Register as Normal User</Link>
         </div>
       </div>
     </div>
