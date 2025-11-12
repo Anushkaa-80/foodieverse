@@ -1,0 +1,31 @@
+:root {
+  /* Light theme */
+  --bg: #f6f7fb;
+  --card-bg: #ffffff;
+  --text: #0f1724;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --input-bg: #f3f4f6;
+  --input-border: #e6e9ef;
+  --glass: rgba(255,255,255,0.6);
+  --shadow: 0 8px 24px rgba(16,24,40,0.08);
+  --radius: 12px;
+}
+
+/* Dark theme overrides via system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;
+    --card-bg: rgba(10,14,21,0.6);
+    --text: #e6eef8;
+    --muted: #93a4c0;
+    --accent: #3b82f6;
+    --accent-foreground: #0b1220;
+    --input-bg: rgba(255,255,255,0.03);
+    --input-border: rgba(255,255,255,0.06);
+    --glass: rgba(255,255,255,0.03);
+    --shadow: 0 10px 30px rgba(2,6,23,0.6);
+    --radius: 12px;
+  }
+}
