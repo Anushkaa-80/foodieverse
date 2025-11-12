@@ -16,4 +16,16 @@ router.post('/', authMiddleware.authFoodPartnerMiddleware ,upload.single("video"
 
 
 //pehle request  authFoodPartnerMiddleware yha aayega ye foodpartner ko uauthenticate krke batayega ki req shi jgh se aarhi hai ya nhi, next() called fir wo foodCreate pe chla jayega  
+
+
+
+/* POST /api/food/ [protected] */
+
+router.get("/", authMiddleware.authUserMiddleware,
+    foodController.getFoodItems
+)
+
+
+// for nprmal user: when user scroll to their feed , so get the new video to scroll, all videos of food items goes here
+
 module.exports= router;
