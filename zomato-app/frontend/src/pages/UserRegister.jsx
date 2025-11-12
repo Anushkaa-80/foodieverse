@@ -1,8 +1,15 @@
 import React from 'react'
 import '../App.css'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
 const UserRegister = () => {
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    const Name = e.target.Name.value;
+    console.log("Name:", Name);
+  }
   return (
     <div className="auth-page">
       <div className="auth-card">
