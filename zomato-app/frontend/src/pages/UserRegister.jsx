@@ -1,10 +1,12 @@
 import React from 'react';
 import '../App.css';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 
 const UserRegister = () => {
 
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,9 +25,11 @@ const UserRegister = () => {
     try {
       // Make POST request to backend
       const response = await axios.post("http://localhost:3000/api/auth/user/register", {
-        fullName,
+        fullName: fullName,
         email,
         password
+      },{
+        withCredentials: true // to allow cookies from backend, to save the token in cookies
       });
 
       console.log("User registered:", response.data);
