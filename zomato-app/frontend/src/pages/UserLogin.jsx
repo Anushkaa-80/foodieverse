@@ -1,34 +1,31 @@
-import React from 'react'
+import React from "react";
 import "../App.css";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UserLogin = () => {
- 
   const navigate = useNavigate();
 
-  const handleSubmit =(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Collect form data
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const response = axios.post("http://localhost:3000/api/auth/user/login",{
-      email,
-      password},{
+    const response = await axios.post(
+      "http://localhost:3000/api/auth/user/login",
+      {
+        email,
+        password,
+      },
+      {withCredentials: true}
+    );
 
-        
-      }); withCredentials: true // to allow cookies from backend, to save the token in cookies  
-      
-  }
- 
- 
- 
- 
- 
- 
- 
+    console.log("User logged in:", response.data);
+    navigate("/");
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-card">
@@ -46,7 +43,9 @@ const UserLogin = () => {
             <input type="password" placeholder="••••••••" />
           </label>
 
-          <button className="btn btn-primary" type="submit">Sign in</button>
+          <button className="btn btn-primary" type="submit">
+            Sign in
+          </button>
         </form>
 
         <div className="auth-foot">
@@ -54,7 +53,7 @@ const UserLogin = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserLogin
+export default UserLogin;

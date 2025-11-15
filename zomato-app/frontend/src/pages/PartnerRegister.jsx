@@ -1,8 +1,41 @@
 import React from 'react'
 import "../App.css";
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 const PartnerRegister = () => {
+
+
+  const navigate = useNavigate();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    
+    const restaurantName = e.target.restaurantName.value;
+    const ownerName = e.target.ownerName.value;
+    const phone = e.target.phone.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/partner/register",
+        {
+          restaurantName,
+          ownerName,
+          phone,
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+
+      console.log("Partner registered:", response.data);
+      navigate("/create-food");
+    } catch (error) {
+      console.error("Error registering partner:", error);
+    }
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-card">
