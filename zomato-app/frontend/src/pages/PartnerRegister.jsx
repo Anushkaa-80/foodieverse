@@ -2,17 +2,17 @@ import React from 'react'
 import "../App.css";
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+
 const PartnerRegister = () => {
-
-
   const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     
-    const restaurantName = e.target.restaurantName.value;
-    const ownerName = e.target.ownerName.value;
+    const name = e.target.name.value;
+    const contactName = e.target.contactName.value;
     const phone = e.target.phone.value;
+    const address = e.target.address.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -20,9 +20,10 @@ const PartnerRegister = () => {
       const response = await axios.post(
         "http://localhost:3000/api/auth/partner/register",
         {
-          restaurantName,
-          ownerName,
+          name,
+          contactName,
           phone,
+          address,
           email,
           password,
         },
@@ -42,30 +43,35 @@ const PartnerRegister = () => {
         <h2 className="auth-title">Partner sign up</h2>
         <p className="auth-sub">Create an account to manage your restaurant and orders.</p>
 
-        <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label className="form-row">
             <span>Restaurant name</span>
-            <input type="text" placeholder="Restaurant or business name" />
+            <input type="text" name="name" placeholder="Restaurant or business name" required />
           </label>
 
           <label className="form-row">
             <span>Owner name</span>
-            <input type="text" placeholder="Owner full name" />
+            <input type="text" name="contactName" placeholder="Owner full name" required />
           </label>
 
           <label className="form-row">
             <span>Phone</span>
-            <input type="tel" placeholder="+1 555 555 555" />
+            <input type="tel" name="phone" placeholder="+1 555 555 555" required />
+          </label>
+
+          <label className="form-row">
+            <span>Address</span>
+            <input type="text" name="address" placeholder="Restaurant address" required />
           </label>
 
           <label className="form-row">
             <span>Email</span>
-            <input type="email" placeholder="you@restaurant.com" />
+            <input type="email" name="email" placeholder="you@restaurant.com" required />
           </label>
 
           <label className="form-row">
             <span>Password</span>
-            <input type="password" placeholder="••••••••" />
+            <input type="password" name="password" placeholder="••••••••" required />
           </label>
 
           <button className="btn btn-primary" type="submit">Create partner account</button>
