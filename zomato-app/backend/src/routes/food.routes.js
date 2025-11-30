@@ -31,6 +31,10 @@ router.post('/save',
     authMiddleware.authUserMiddleware,
     foodController.saveFood
 )
+router.get('/save',
+    authMiddleware.authUserMiddleware,
+    foodController.getSaveFood
+)
 
 // for nprmal user: when user scroll to their feed , so get the new video to scroll, all videos of food items goes here
 
