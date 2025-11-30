@@ -1,55 +1,49 @@
-import React from "react";
-import "../App.css";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import '../../styles/auth-shared.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserLogin = () => {
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Collect form data
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const response = await axios.post(
-      "http://localhost:3000/api/auth/user/login",
-      {
-        email,
-        password,
-      },
-      {withCredentials: true}
-    );
+    const response = await axios.post("http://localhost:3000/api/auth/user/login", {
+      email,
+      password
+    }, { withCredentials: true });
 
-    console.log("User logged in:", response.data);
-    navigate("/");
+    console.log(response.data);
+
+    navigate("/"); // Redirect to home after login
+
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <h2 className="auth-title">Welcome back</h2>
-        <p className="auth-sub">Sign in to continue ordering.</p>
-
-        <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
-          <label className="form-row">
-            <span>Email</span>
-            <input type="email" placeholder="you@example.com" />
-          </label>
-
-          <label className="form-row">
-            <span>Password</span>
-            <input type="password" placeholder="••••••••" />
-          </label>
-
-          <button className="btn btn-primary" type="submit">
-            Sign in
-          </button>
+    <div className="auth-page-wrapper">
+      <div className="auth-card" role="region" aria-labelledby="user-login-title">
+        <header>
+          <h1 id="user-login-title" className="auth-title">Welcome back</h1>
+          <p className="auth-subtitle">Sign in to continue your food journey.</p>
+        </header>
+        <form className="auth-form" onSubmit={handleSubmit} noValidate>
+          <div className="field-group">
+            <label htmlFor="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" autoComplete="email" />
+          </div>
+          <div className="field-group">
+            <label htmlFor="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="••••••••" autoComplete="current-password" />
+          </div>
+          <button className="auth-submit" type="submit">Sign In</button>
         </form>
-
-        <div className="auth-foot">
-          New here? <a href="/user/register">Create an account</a>
+        <div className="auth-alt-action">
+          New here? <a href="/user/register">Create account</a>
         </div>
       </div>
     </div>
