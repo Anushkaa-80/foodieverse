@@ -1,9 +1,13 @@
 const express = require('express');
-const authMiddleware= require("../middlewares/auth.middleware");
-const foodPartnerController= require("../controllers/food-partner.controller");
-const router= express.Router();
+const foodPartnerController = require("../controllers/food-partner.controller");
+const authMiddleware = require("../middlewares/auth.middleware");
 
-router.get("/:id", authMiddleware.authUserMiddleware, foodPartnerController.getFoodPartnerById)
-// ye api tabhi access hoga jab user authenticate hoga , isliye authUserMiddleware use kiya hai
+const router = express.Router();
 
-module.exports= router;
+
+/* /api/food-partner/:id */
+router.get("/:id",
+    authMiddleware.authUserMiddleware,
+    foodPartnerController.getFoodPartnerById)
+
+module.exports = router;

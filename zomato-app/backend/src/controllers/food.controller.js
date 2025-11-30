@@ -5,16 +5,27 @@ const saveModel = require("../models/save.model.js");
 const { v4:uuid} = require("uuid") //via npm i uuid
 
 async function createFood(req, res){
-    console.log(req.foodPartner);
+    // console.log(req.foodPartner);
     
-    console.log(req.body) //frontend se data recieve hona chahiye req.body me
-    console.log(req.file) // output the file dataa
+    // console.log(req.body) //frontend se data recieve hona chahiye req.body me
+    // console.log(req.file) // output the file dataa
     //server pe file store nhi krte,when deploying on server we dont have access to server, ssd
 
- const fileUploadResult = await storageService.uploadFile(req.file.buffer,uuid()) //whenever called uuid generates unique id.
+//  const fileUploadResult = await storageService.uploadFile(req.file.buffer,uuid()) //whenever called uuid generates unique id.
 
-  console.log(fileUploadResult);
-    res.send("food item created")
+ const fileUploadResult = await storageService.uploadFile(req.file.buffer, uuid())
+
+    const foodItem = await foodModel.create({
+        name: req.body.name,
+        description: req.body.description,
+        video: fileUploadResult.url,
+        foodPartner: req.foodPartner._id
+    })
+
+    res.status(201).json({
+        message: "food created successfully",
+        food: foodItem
+    })
 }
 
 async function getFoodItems(Req,res)
@@ -79,6 +90,9 @@ async function saveFood(req,res){
             user: user._id,
             food: foodId
         })
+         await foodModel.findByIdAndUpdate(foodId, {
+            $inc: { savesCount: -1 }
+        })
         return res.status(200).json({
             message: " Food unsaved successfully"
         })
@@ -88,16 +102,35 @@ async function saveFood(req,res){
         user: user._id,
         food: foodId
     })
+      await foodModel.findByIdAndUpdate(foodId, {
+        $inc: { savesCount: 1 }
+    })
     res.status(201).json({
         message: "Food saved successfully",
         save
     })
 }
+async function getSaveFood(req, res) {
 
+    const user = req.user;
+
+    const savedFoods = await saveModel.find({ user: user._id }).populate('food');
+
+    if (!savedFoods || savedFoods.length === 0) {
+        return res.status(404).json({ message: "No saved foods found" });
+    }
+
+    res.status(200).json({
+        message: "Saved foods retrieved successfully",
+        savedFoods
+    });
+
+}
 
 module.exports={
     createFood,
     getFoodItems,
     likeFood,
-    saveFood
+    saveFood,
+    getSaveFood
 }
