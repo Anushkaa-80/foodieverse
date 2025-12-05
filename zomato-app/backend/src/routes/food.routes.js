@@ -7,6 +7,9 @@ const multer = require('multer');
 const upload= multer({
     storage: multer.memoryStorage(),
 })
+
+
+
 // express have problem that is it could not read any types of files which is coming from frontend thats why we use MULTER
 
 //("video/mama/chacha/anything") butthe condition is name should be matched to the frontend var
@@ -21,11 +24,10 @@ router.get("/",authMiddleware.authUserMiddleware, foodController.getFoodItems)
 
 /* POST /api/food/ [protected] */
 
-router.get("/", authMiddleware.authUserMiddleware,
-    foodController.getFoodItems
-)
 
-router.post('/like',authMiddleware.authUserMiddleware, foodController.likeFoodItem)
+
+router.post('/like', authMiddleware.authUserMiddleware, foodController.likeFood);
+
 
 router.post('/save',
     authMiddleware.authUserMiddleware,
